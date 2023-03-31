@@ -1,0 +1,15 @@
+---
+- name: Install Grafana
+  hosts: hosts
+  become: yes
+
+
+  tasks:
+  - name: Download apt key
+    ansible.builtin.apt_key:
+      url: https://packages.grafana.com/gpg.key
+      state: present
+
+  # - name: Add Grafana to sources.list
+  # - name: Update the apt cache and install Grafana
+  # - name: Ensure Grafana is started and enabled
