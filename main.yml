@@ -49,7 +49,19 @@
       group: prometheus
       shell: /sbin/nologin
 
-  # - name: Create prom directories
+  - name: Create prom directories
+    ansible.builtin.file:
+      path: "{{ item }}"
+      state: directory
+      recurse: prometheus
+      group: prometheus
+      mode: "0755"
+    loop:
+      - /etc/prometheus
+      - /etc/prometheus/rules
+      - /etc/prometheus/rules.d
+      - /etc/prometheus/files_sd
+      - /var/lib/prometheus
   # - name: Set permissions
   # - name: Copy files
   # - name: Copy Files
