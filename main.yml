@@ -36,7 +36,7 @@
     ansible.builtin.unarchive:
       src: /home/ubuntu/prometheus-2.30.3.linux-amd64.tar.gz
       dest: /home/ubuntu
-      remote_yes: yes
+      remote_src: yes
 
   - name: Create Prom Group
     ansible.builtin.group:
