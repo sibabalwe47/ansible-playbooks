@@ -3,6 +3,9 @@
   hosts: localhost
   connection: local
   become: yes
+  vars:
+    listen_address: 0.0.0.0
+    listen_port: 9090
 
   tasks:
   - name: Download apt key
@@ -81,5 +84,8 @@
     loop:
       - /home/ubuntu/prometheus-2.30.3.linux-amd64/consoles/
       - /home/ubuntu/prometheus-2.30.3.linux-amd64/console_libraries
-  # - name: Create config file
+  - name: Create config file
+    ansible.builtin.template:
+      src: /home/ubuntu/ansible-playbooks/prometheus.yml.j2
+      dest: /etc/prometheus/prometheus.yml
   # - name: Ensure prom is started
