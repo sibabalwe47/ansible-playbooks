@@ -37,9 +37,18 @@
       src: /home/ubuntu/prometheus-2.30.3.linux-amd64.tar.gz
       dest: /home/ubuntu
       remote_yes: yes
-      
+
   - name: Create Prom Group
+    ansible.builtin.group:
+      name: prometheus
+      state: present
+      
   - name: Create Prom User
+    ansible.builtin.user:
+      name: prometheus
+      group: prometheus
+      shell: /sbin/nologin
+
   - name: Create prom directories
   - name: Set permissions
   - name: Copy files
