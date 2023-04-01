@@ -8,6 +8,7 @@
     listen_port: 9090
 
   tasks:
+
   - name: Download apt key
     ansible.builtin.apt_key:
       url: https://packages.grafana.com/gpg.key
@@ -66,16 +67,19 @@
       - /etc/prometheus/rules.d
       - /etc/prometheus/files_sd
       - /var/lib/prometheus
+
   - name: Copy files
     ansible.builtin.copy:
       src: "{{ item }}"
       dest: /usr/local/bin
       remote_src: yes
+      mode: "0755"
       owner: prometheus
       group: prometheus
     loop:
       - /home/ubuntu/prometheus-2.30.3.linux-amd64/prometheus
       - /home/ubuntu/prometheus-2.30.3.linux-amd64/promtool
+
   - name: Copy Files
     ansible.builtin.copy:
       src: "{{ item }}"
@@ -84,8 +88,19 @@
     loop:
       - /home/ubuntu/prometheus-2.30.3.linux-amd64/consoles/
       - /home/ubuntu/prometheus-2.30.3.linux-amd64/console_libraries
+
   - name: Create config file
     ansible.builtin.template:
       src: /home/ubuntu/ansible-playbooks/prometheus.yml.j2
       dest: /etc/prometheus/prometheus.yml
-  # - name: Ensure prom is started
+
+  - name:
+    ansible.builtin.template: 
+      src:  /home/ubuntu/ansible-playbooks/prometheus.service.j2
+      dest: /etc/systemd/system/prometheus.service
+
+  - name: Ensure prom is started
+    ansible.builtin.systemd:
+      name: prometheus
+      state: started
+      enabled: yes
