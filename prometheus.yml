@@ -1,0 +1,9 @@
+---
+- name: Install Grafana
+  hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+    - name: Download Prometheus
+    - name: Extract Prometheus resources
