@@ -42,16 +42,16 @@
     ansible.builtin.group:
       name: prometheus
       state: present
-      
+
   - name: Create Prom User
     ansible.builtin.user:
       name: prometheus
       group: prometheus
       shell: /sbin/nologin
 
-  - name: Create prom directories
-  - name: Set permissions
-  - name: Copy files
-  - name: Copy Files
-  - name: Create config file
-  - name: Ensure prom is started
+  # - name: Create prom directories
+  # - name: Set permissions
+  # - name: Copy files
+  # - name: Copy Files
+  # - name: Create config file
+  # - name: Ensure prom is started
