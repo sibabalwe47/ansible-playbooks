@@ -7,9 +7,8 @@
 
   tasks:
     - name: Add Jenkins apt repository key
-      ansible.builtin.get_url:
+      ansible.builtin.apt_key:
         url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
-        dest: /usr/share/keyrings/jenkins-keyring.asc
         state: present
 
     - name: Add jenkins repo to sources.list
