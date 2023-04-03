@@ -21,9 +21,9 @@
       ansible.builtin.apt:
         name: jenkins
         update_cache: yes
-        
+
     - name: Ensure jenkins is started and enabled
-      ansible.builtin.systemctl:
+      ansible.builtin.systemd:
         name: jenkins
         enabled: yes
         state: started
