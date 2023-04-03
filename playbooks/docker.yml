@@ -1,5 +1,5 @@
 ---
-- name: Install Jenkins
+- name: Install Docker
   hosts: localhost
   become: yes
   
@@ -42,3 +42,9 @@
       - name: Install Docker Module for Python
         pip:
           name: docker
+
+      - name: Install docker-compose from official github repo
+        get_url:
+          url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+          dest: /usr/local/bin/docker-compose
+          mode: 'u+x,g+x'
