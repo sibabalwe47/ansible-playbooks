@@ -6,19 +6,26 @@
 
 
   tasks:
+    # - name: Add Jenkins apt repository key
+    #   ansible.builtin.get_url:
+    #     url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+    #     dest: /etc/apt/trusted.gpg.d/jenkins.asc
+    #     mode: '0644'
+    #     force: true
+
+    # - name: Add jenkins repo to sources.list
+    #   ansible.builtin.apt_repository:
+    #     repo: deb https://pkg.jenkins.io/debian-stable binary/
+    #     filename: jenkins
+    #     state: present
     - name: Add Jenkins apt repository key
-      ansible.builtin.get_url:
-        url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
-        dest: /etc/apt/trusted.gpg.d/jenkins.asc
-        mode: '0644'
-        force: true
+      ansible.builtin.command:
+        cmd: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
 
     - name: Add jenkins repo to sources.list
-      ansible.builtin.apt_repository:
-        repo: deb https://pkg.jenkins.io/debian-stable binary/
-        filename: jenkins
-        state: present
-
+      ansible.builtin.command:
+        cmd: sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+        
     - name: Update apt cache and install jenkins
       ansible.builtin.apt:
         name: jenkins
