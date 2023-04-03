@@ -1,0 +1,29 @@
+---
+- name: Install Grafana
+  hosts: localhost
+  connection: local
+  become: yes
+
+
+  tasks:
+    - name: Download apt key
+      ansible.builtin.apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+        state: present
+
+    - name: Add jenkins repo to sources.list
+      ansible.builtin.apt_repository:
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
+        filename: jenkins
+        state: present
+
+    - name: Update apt cache and install jenkins
+      ansible.builtin.apt:
+        name: jenkins
+        update_cache: yes
+        
+    - name: Ensure jenkins is started and enabled
+      ansible.builtin.systemctl:
+        name: jenkins
+        enabled: yes
+        state: started
