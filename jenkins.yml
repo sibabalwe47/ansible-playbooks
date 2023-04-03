@@ -13,7 +13,7 @@
 
     - name: Add jenkins repo to sources.list
       ansible.builtin.apt_repository:
-        repo: deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \ https://pkg.jenkins.io/debian binary/
+        repo: deb https://pkg.jenkins.io/debian binary/
         filename: jenkins
         state: present
 
